@@ -6,8 +6,8 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class Calculator {
-    private Scanner scanner;
-    private Queue<Integer> results;
+    private final Scanner scanner;
+    private final Queue<Integer>  results;
 
     public Calculator() {
         this.scanner = new Scanner(System.in);
@@ -98,22 +98,13 @@ public class Calculator {
     }
 
     public void printPerformCalculation(int firstNum, int secondNum, char operator) {
-        int result = 0;
-
-        switch (operator) {
-            case '+':
-                result = firstNum + secondNum;
-                break;
-            case '-':
-                result = firstNum - secondNum;
-                break;
-            case '*':
-                result = firstNum * secondNum;
-                break;
-            case '/':
-                result = firstNum / secondNum;
-                break;
-        }
+        int result = switch (operator) {
+            case '+' -> firstNum + secondNum;
+            case '-' -> firstNum - secondNum;
+            case '*' -> firstNum * secondNum;
+            case '/' -> firstNum / secondNum;
+            default -> 0;
+        };
 
         System.out.println();
         System.out.println("----------------------------------------");
