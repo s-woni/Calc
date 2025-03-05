@@ -42,35 +42,29 @@ public class Calculator {
 
             System.out.print(tempString + " 번째 숫자를 입력해주세요 : ");
 
-            if (scanner.hasNext("exit")) {
-                System.out.println();
-                System.out.println("계산기를 종료합니다.");
-                scanner.close();
-                System.exit(0);
-            }
-
             try {
-                if (scanner.hasNextInt()) {
-                    int number = scanner.nextInt();
-
-                    if (number < 0) {
-                        System.out.println();
-                        System.out.println("음수를 입력하셨습니다.");
-                        System.out.println("양수를 입력해주세요.");
-                        System.out.println();
-                        continue;
-                    }
-                    scanner.nextLine();
-                    return number;
-                } else {
-                    throw new InputMismatchException("잘못된 입력입니다.");
+                if (scanner.hasNext("exit")) {
+                    System.out.println();
+                    System.out.println("계산기를 종료합니다.");
+                    scanner.close();
+                    System.exit(0);
                 }
+
+                int number = scanner.nextInt();
+
+                if (number < 0) {
+                    throw new IllegalArgumentException("\n음수를 입력하셨습니다.\n양수를 입력해주세요.\n");
+                }
+                scanner.nextLine();
+                return number;
             } catch (InputMismatchException e) {
                 System.out.println();
-                System.out.println(e.getMessage());
+                System.out.println("잘못된 입력입니다.");
                 System.out.println("숫자를 입력해주세요.");
                 System.out.println();
                 scanner.nextLine();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -79,33 +73,26 @@ public class Calculator {
         while(true) {
             System.out.print("사칙 연산 기호를 입력하세요 (+, -, *, /) : ");
 
-            if (scanner.hasNext("exit")) {
-                System.out.println();
-                System.out.println("계산기를 종료합니다.");
-                scanner.close();
-                System.exit(0);
-            }
-
             try {
+                if (scanner.hasNext("exit")) {
+                    System.out.println();
+                    System.out.println("계산기를 종료합니다.");
+                    scanner.close();
+                    System.exit(0);
+                }
+
                 char operators = scanner.next().charAt(0);
 
-                if ("+-*/".indexOf(operators) != -1) {
-                    if (secondNum == 0 && operators == '/') {
-                        System.out.println();
-                        System.out.println("나눗셈 연산에서 두번째 정수에 0이 입력될 수 없습니다.");
-                        System.out.println();
-                        continue;
-                    }
-                    scanner.nextLine();
-                    return operators;
-                } else {
-                    throw new IllegalArgumentException("잘못된 입력입니다.");
+                if ("+-*/".indexOf(operators) == -1) {
+                    throw new IllegalArgumentException("\n잘못된 입력입니다.\n+, -, *, / 중 하나를 입력해주세요.\n");
                 }
-            } catch (IllegalArgumentException e) {
-                System.out.println();
+                if (secondNum == 0 && operators == '/') {
+                    throw new ArithmeticException("\n나눗셈 연산에서 두번째 정수에 0이 입력될 수 없습니다.\n다시 입력해주세요.\n");
+                }
+                scanner.nextLine();
+                return operators;
+            } catch (IllegalArgumentException | ArithmeticException e) {
                 System.out.println(e.getMessage());
-                System.out.println("+, -, *, / 중 하나를 입력해주세요.");
-                System.out.println();
             }
         }
     }
