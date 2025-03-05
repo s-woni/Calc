@@ -1,5 +1,6 @@
 package level2;
 
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -48,20 +49,25 @@ public class Calculator {
                 System.exit(0);
             }
 
-            if (scanner.hasNextInt()) {
-                int number = scanner.nextInt();
+            try {
+                if (scanner.hasNextInt()) {
+                    int number = scanner.nextInt();
 
-                if (number < 0) {
-                    System.out.println();
-                    System.out.println("음수를 입력하셨습니다.");
-                    System.out.println("양수를 입력해주세요.");
-                    System.out.println();
-                    continue;
+                    if (number < 0) {
+                        System.out.println();
+                        System.out.println("음수를 입력하셨습니다.");
+                        System.out.println("양수를 입력해주세요.");
+                        System.out.println();
+                        continue;
+                    }
+                    scanner.nextLine();
+                    return number;
+                } else {
+                    throw new InputMismatchException("잘못된 입력입니다.");
                 }
-                scanner.nextLine();
-                return number;
-            } else {
+            } catch (InputMismatchException e) {
                 System.out.println();
+                System.out.println(e.getMessage());
                 System.out.println("숫자를 입력해주세요.");
                 System.out.println();
                 scanner.nextLine();
@@ -80,20 +86,24 @@ public class Calculator {
                 System.exit(0);
             }
 
-            char operators = scanner.next().charAt(0);
+            try {
+                char operators = scanner.next().charAt(0);
 
-            if ("+-*/".indexOf(operators) != -1) {
-                if (secondNum == 0 && operators == '/') {
-                    System.out.println();
-                    System.out.println("나눗셈 연산에서 두번째 정수에 0이 입력될 수 없습니다.");
-                    System.out.println();
-                    continue;
+                if ("+-*/".indexOf(operators) != -1) {
+                    if (secondNum == 0 && operators == '/') {
+                        System.out.println();
+                        System.out.println("나눗셈 연산에서 두번째 정수에 0이 입력될 수 없습니다.");
+                        System.out.println();
+                        continue;
+                    }
+                    scanner.nextLine();
+                    return operators;
+                } else {
+                    throw new IllegalArgumentException("잘못된 입력입니다.");
                 }
-                scanner.nextLine();
-                return operators;
-            } else {
+            } catch (IllegalArgumentException e) {
                 System.out.println();
-                System.out.println("잘못된 입력입니다.");
+                System.out.println(e.getMessage());
                 System.out.println("+, -, *, / 중 하나를 입력해주세요.");
                 System.out.println();
             }
