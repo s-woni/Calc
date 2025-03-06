@@ -21,7 +21,7 @@ public class App {
             while (true) {
                 System.out.print("첫 번째 숫자를 입력해주세요 : ");
 
-                if (scanner.hasNext("exit")) {
+                if (scanner.hasNext("exit")) { // exit 입력시 return을 통해 계산기 종료
                     System.out.println();
                     System.out.println("계산기를 종료합니다.");
                     scanner.close();
@@ -29,7 +29,7 @@ public class App {
                 }
                 if (scanner.hasNextInt()) {
                     firstNum = scanner.nextInt();
-                    if (firstNum < 0) {
+                    if (firstNum < 0) { // 첫 번째 숫자가 음수 입력시 continue를 통하여 반복
                         System.out.println();
                         System.out.println("음수를 입력하셨습니다.");
                         System.out.println("양수를 입력해주세요.");
@@ -38,7 +38,7 @@ public class App {
                     }
                     scanner.nextLine();
                     break;
-                } else {
+                } else { // 숫자가 아닐 시에도 반복문을 탈출하지 못하여 반복
                     System.out.println();
                     System.out.println("숫자를 입력해주세요.");
                     System.out.println();
@@ -86,8 +86,8 @@ public class App {
 
                 operator = scanner.next().charAt(0);
 
-                if ("+-*/".indexOf(operator) != -1) {
-                    if (secondNum == 0 && operator == '/') {
+                if ("+-*/".indexOf(operator) != -1) { // 연산자의 값에 + - * / 가 입력되어 있는지 확인 후 아니면 다시 반복
+                    if (secondNum == 0 && operator == '/') { // 0으로 나누는걸 방지하기 위해 두번째 숫자가 0이고 연산기호가 / 이면 continue를 통하여 반복
                         System.out.println();
                         System.out.println("나눗셈 연산에서 두번째 정수에 0이 입력될 수 없습니다.");
                         System.out.println();
